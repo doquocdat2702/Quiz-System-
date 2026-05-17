@@ -49,13 +49,6 @@ function Navbar() {
           History
         </Link>
 
-        <Link
-          to="/admin"
-          className="font-medium hover:text-blue-500 duration-300"
-        >
-          Admin
-        </Link>
-
         <button
           onClick={handleLogout}
           className="bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-2xl duration-300"

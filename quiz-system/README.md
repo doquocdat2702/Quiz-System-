@@ -1,16 +1,119 @@
-# React + Vite
+# Quiz System 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Quiz Management System built with React + Vite + TailwindCSS.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Authentication
+- Login
+- Register
+- Fake JWT Token
+- Protected Routes
+- Admin Routes
 
-## React Compiler
+### Quiz System
+- View Quiz List
+- Start Quiz
+- Submit Answers
+- Auto Score Calculation
+- Result Page
+- History Result
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Admin Dashboard
+- Dashboard Statistics
+- Manage Quizzes
+- Manage Questions
+- Upload Question Images
+- Delete Questions
+- Fake CRUD with localStorage
 
-## Expanding the ESLint configuration
+### UI/UX
+- Modern SaaS UI
+- Responsive Design
+- Glassmorphism Effects
+- Smooth Hover Animation
+- Gradient Background
+- Sidebar Layout
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+# 🛠️ Technologies
+
+- React
+- Vite
+- TailwindCSS
+- React Router DOM
+- React Icons
+- localStorage
+
+---
+
+# 📁 Folder Structure
+
+```bash
+src/
+│
+├── components/
+│   ├── Navbar.jsx
+│   ├── Sidebar.jsx
+│   └── QuizCard.jsx
+│
+├── layouts/
+│   └── AdminLayout.jsx
+│
+├── pages/
+│   ├── auth/
+│   │   ├── Login.jsx
+│   │   └── Register.jsx
+│   │
+│   ├── admin/
+│   │   ├── Dashboard.jsx
+│   │   ├── ManageQuiz.jsx
+│   │   └── ManageQuestion.jsx
+│   │
+│   └── quiz/
+│       ├── Home.jsx
+│       ├── QuizPage.jsx
+│       ├── ResultPage.jsx
+│       └── HistoryPage.jsx
+│
+├── routes/
+│   ├── ProtectedRoute.jsx
+│   └── AdminRoute.jsx
+│
+├── App.jsx
+└── main.jsx
+⚙️ Installation
+1. Clone project
+git clone <your-repository-url>
+2. Install dependencies
+npm install
+3. Run project
+npm run dev
+🔑 Demo Account
+Admin
+Email: admin@gmail.com
+Password: 123456
+User
+
+Use any other email/password.
+
+📸 Main Features Preview
+Modern Login/Register UI
+Quiz Dashboard
+Admin Sidebar
+Question Management
+Result Tracking
+Responsive Layout
+🚀 Future Improvements
+Real Backend API
+MySQL Database
+JWT Authentication
+Timer Quiz
+Progress Bar
+Analytics Charts
+Dark Mode
+Pagination
+Search & Filter
+Edit Question/Quiz
+Cloud Image Upload
