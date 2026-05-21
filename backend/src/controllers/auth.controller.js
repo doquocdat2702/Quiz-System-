@@ -68,7 +68,8 @@ async function login(req, res, next) {
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    const { password: _, ...userWithoutPassword } = user;
+    const userWithoutPassword = { ...user };
+    delete userWithoutPassword.password;
     console.log(`[AUTH] Đăng nhập thành công: ${email}`);
     res.json({ success: true, message: "Đăng nhập thành công", data: { user: userWithoutPassword, token } });
   } catch (err) {

@@ -5,7 +5,7 @@ import {
 } from "react";
 
 import { AuthContext }
-from "../context/AuthContext";
+from "../context/auth-context";
 
 function Navbar() {
 

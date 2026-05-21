@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import Navbar from "../../components/Navbar";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/auth-context";
 import { updateProfile } from "../../services/authService";
 
 function ProfilePage() {

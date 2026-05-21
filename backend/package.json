@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "eslint .",
+    "test": "node --test",
+    "build": "node --check server.js && node --check src/app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -17,6 +20,9 @@
     "mysql2": "^3.22.3"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
     "nodemon": "^3.1.0"
   }
 }
