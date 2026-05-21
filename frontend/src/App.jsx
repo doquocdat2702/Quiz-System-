@@ -19,6 +19,18 @@ from "./pages/quiz/ResultPage";
 import HistoryPage
 from "./pages/quiz/HistoryPage";
 
+import CreateQuizPage
+from "./pages/quiz/CreateQuizPage";
+
+import JoinQuizPage
+from "./pages/quiz/JoinQuizPage";
+
+import EditQuizPage
+from "./pages/quiz/EditQuizPage";
+
+import ProfilePage
+from "./pages/quiz/ProfilePage";
+
 import ProtectedRoute
 from "./routes/ProtectedRoute";
 
@@ -70,10 +82,55 @@ function App() {
       />
 
       <Route
+        path="/result/:attemptId"
+        element={
+          <ProtectedRoute>
+            <ResultPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/history"
         element={
           <ProtectedRoute>
             <HistoryPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/create"
+        element={
+          <ProtectedRoute>
+            <CreateQuizPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/edit/:id"
+        element={
+          <ProtectedRoute>
+            <EditQuizPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/join"
+        element={
+          <ProtectedRoute>
+            <JoinQuizPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />
