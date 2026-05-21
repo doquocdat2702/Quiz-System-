@@ -4,15 +4,22 @@ const { initDb } = require("./src/config/database");
 
 const PORT = process.env.PORT || 8080;
 
-initDb();
+async function startServer() {
+  await initDb();
 
-app.listen(PORT, () => {
-  console.log("─────────────────────────────────────────────");
-  console.log(`[SERVER] Quiz System Backend đang chạy`);
-  console.log(`[SERVER] http://localhost:${PORT}`);
-  console.log(`[SERVER] Health: http://localhost:${PORT}/api/health`);
-  console.log(`[SERVER] Môi trường: ${process.env.NODE_ENV}`);
-  console.log("─────────────────────────────────────────────");
+  app.listen(PORT, () => {
+    console.log("---------------------------------------------");
+    console.log("[SERVER] Quiz System Backend dang chay");
+    console.log(`[SERVER] http://localhost:${PORT}`);
+    console.log(`[SERVER] Health: http://localhost:${PORT}/api/health`);
+    console.log(`[SERVER] Moi truong: ${process.env.NODE_ENV}`);
+    console.log("---------------------------------------------");
+  });
+}
+
+startServer().catch((err) => {
+  console.error("[FATAL] Server startup failed:", err.message);
+  process.exit(1);
 });
 
 process.on("uncaughtException", (err) => {

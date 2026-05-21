@@ -7,28 +7,27 @@ async function register(req, res, next) {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ success: false, message: "Vui lòng điền đầy đủ thông tin" });
+      return res.status(400).json({ success: false, message: "Vui long dien day du thong tin" });
     }
+
     if (password.length < 6) {
-      return res.status(400).json({ success: false, message: "Mật khẩu phải có ít nhất 6 ký tự" });
+      return res.status(400).json({ success: false, message: "Mat khau phai co it nhat 6 ky tu" });
     }
 
     const pool = getPool();
-    const [existing] = await pool.query("SELECT id FROM users WHERE email = ?", [email]);
-    if (existing.length > 0) {
-      return res.status(409).json({ success: false, message: "Email đã được sử dụng" });
+    const existing = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
+    if (existing.rows.length > 0) {
+      return res.status(409).json({ success: false, message: "Email da duoc su dung" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const [result] = await pool.query(
-      "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+    const result = await pool.query(
+      `INSERT INTO users (name, email, password, role)
+       VALUES ($1, $2, $3, $4)
+       RETURNING id, name, email, role, created_at`,
       [name, email, hashedPassword, "user"]
     );
-
-    const [[user]] = await pool.query(
-      "SELECT id, name, email, role, created_at FROM users WHERE id = ?",
-      [result.insertId]
-    );
+    const user = result.rows[0];
 
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
@@ -36,8 +35,8 @@ async function register(req, res, next) {
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    console.log(`[AUTH] Đăng ký thành công: ${email}`);
-    res.status(201).json({ success: true, message: "Đăng ký thành công", data: { user, token } });
+    console.log(`[AUTH] Register success: ${email}`);
+    res.status(201).json({ success: true, message: "Dang ky thanh cong", data: { user, token } });
   } catch (err) {
     next(err);
   }
@@ -48,18 +47,19 @@ async function login(req, res, next) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ success: false, message: "Vui lòng nhập email và mật khẩu" });
+      return res.status(400).json({ success: false, message: "Vui long nhap email va mat khau" });
     }
 
     const pool = getPool();
-    const [[user]] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    const user = result.rows[0];
     if (!user) {
-      return res.status(401).json({ success: false, message: "Email hoặc mật khẩu không đúng" });
+      return res.status(401).json({ success: false, message: "Email hoac mat khau khong dung" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ success: false, message: "Email hoặc mật khẩu không đúng" });
+      return res.status(401).json({ success: false, message: "Email hoac mat khau khong dung" });
     }
 
     const token = jwt.sign(
@@ -70,8 +70,9 @@ async function login(req, res, next) {
 
     const userWithoutPassword = { ...user };
     delete userWithoutPassword.password;
-    console.log(`[AUTH] Đăng nhập thành công: ${email}`);
-    res.json({ success: true, message: "Đăng nhập thành công", data: { user: userWithoutPassword, token } });
+
+    console.log(`[AUTH] Login success: ${email}`);
+    res.json({ success: true, message: "Dang nhap thanh cong", data: { user: userWithoutPassword, token } });
   } catch (err) {
     next(err);
   }
@@ -80,14 +81,16 @@ async function login(req, res, next) {
 async function getMe(req, res, next) {
   try {
     const pool = getPool();
-    const [[user]] = await pool.query(
-      "SELECT id, name, email, role, created_at FROM users WHERE id = ?",
+    const result = await pool.query(
+      "SELECT id, name, email, role, created_at FROM users WHERE id = $1",
       [req.user.id]
     );
+    const user = result.rows[0];
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "Người dùng không tồn tại" });
+      return res.status(404).json({ success: false, message: "Nguoi dung khong ton tai" });
     }
+
     res.json({ success: true, data: { user } });
   } catch (err) {
     next(err);

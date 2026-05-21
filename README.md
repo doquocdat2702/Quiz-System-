@@ -1,12 +1,12 @@
 # Quiz System
 
-Quiz System la ung dung lam bai quiz gom frontend, backend API va database MySQL. Project duoc cau hinh de chay bang Docker Compose va co CI tren GitHub Actions.
+Quiz System la ung dung lam bai quiz gom frontend, backend API va database PostgreSQL. Project duoc cau hinh de chay bang Docker Compose va co CI tren GitHub Actions.
 
 ## Stack
 
 - Frontend: React, Vite, Tailwind CSS
 - Backend: Node.js, Express
-- Database: MySQL 8
+- Database: PostgreSQL, Supabase-compatible
 - Runtime: Docker Compose
 - CI: GitHub Actions
 
@@ -31,11 +31,14 @@ cp .env.example .env
 Bien moi truong quan trong:
 
 ```env
-MYSQL_PORT=3307
+POSTGRES_PORT=5433
 BACKEND_PORT=8080
 FRONTEND_PORT=5173
-MYSQL_ROOT_PASSWORD=change_me_mysql_root_password
-DB_NAME=quiz_system
+POSTGRES_DB=quiz_system
+POSTGRES_USER=quiz_user
+POSTGRES_PASSWORD=quiz_password
+DATABASE_URL=postgresql://quiz_user:quiz_password@db:5432/quiz_system
+DATABASE_SSL=false
 JWT_SECRET=change_me_in_production
 JWT_EXPIRES_IN=7d
 VITE_API_URL=/api
@@ -54,7 +57,7 @@ Mac dinh:
 
 - Frontend: `http://localhost:5173`
 - Backend health: `http://localhost:8080/api/health`
-- MySQL host port: `3307`
+- PostgreSQL host port: `5433`
 
 Neu port 8080 dang bi chiem, sua `.env`:
 
@@ -126,7 +129,7 @@ Debug theo layer:
 
 - L4 Frontend: Console, Network tab
 - L3 Backend: API response, backend logs
-- L2 External/DB: MySQL logs, DB env
+- L2 External/DB: PostgreSQL/Supabase logs, `DATABASE_URL`
 - L1 Infrastructure: Docker container, port, network
 
 ## Incident

@@ -8,7 +8,7 @@
 
 ## Thu tu deploy
 
-1. Database MySQL.
+1. Database PostgreSQL.
 2. Backend API.
 3. Frontend Nginx.
 4. Kiem tra ENV, CORS va log.
@@ -28,7 +28,7 @@ Neu port host bi trung, sua `.env`:
 ```env
 BACKEND_PORT=8081
 FRONTEND_PORT=5173
-MYSQL_PORT=3307
+POSTGRES_PORT=5433
 ```
 
 Sau do chay lai:
@@ -56,5 +56,23 @@ curl http://localhost:8081/api/health
 
 - L4 Frontend: Mo DevTools, xem Console va Network.
 - L3 Backend: `docker compose logs backend`, test `/api/health`.
-- L2 Database: `docker compose logs db`, kiem tra bien `DB_*`.
+- L2 Database: `docker compose logs db`, kiem tra `DATABASE_URL`.
 - L1 Infrastructure: `docker compose ps`, kiem tra port, container, network.
+
+## Deploy Backend Render voi Supabase
+
+Tren Render backend service, cau hinh environment:
+
+```env
+NODE_ENV=production
+JWT_SECRET=<secret-dai>
+JWT_EXPIRES_IN=7d
+DATABASE_URL=<Supabase Postgres connection string>
+DATABASE_SSL=true
+```
+
+Frontend static site tren Render can:
+
+```env
+VITE_API_URL=https://<backend-service>.onrender.com/api
+```
