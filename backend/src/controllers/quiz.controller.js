@@ -60,12 +60,10 @@ async function getQuizByCode(req, res, next) {
     const quiz = quizResult.rows[0];
 
     if (!quiz) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: "Không tìm thấy bài test với mã này",
-        });
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy bài test với mã này",
+      });
     }
 
     res.json({ success: true, data: { quiz } });
@@ -90,12 +88,10 @@ async function getQuizForEdit(req, res, next) {
     }
 
     if (String(quiz.created_by) !== String(req.user.id)) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Bạn không có quyền sửa bài test này",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "Bạn không có quyền sửa bài test này",
+      });
     }
 
     const questionsResult = await pool.query(
@@ -179,6 +175,7 @@ async function submitQuiz(req, res, next) {
   }
 }
 baoloi;
+agfgf;
 
 async function createQuiz(req, res, next) {
   const pool = getPool();
@@ -234,13 +231,11 @@ async function createQuiz(req, res, next) {
     console.log(
       `[QUIZ] User ${req.user.email} created quiz: "${title}" (id: ${newQuiz.id}, code: ${code})`,
     );
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Tạo quiz thành công",
-        data: { quiz: newQuiz },
-      });
+    res.status(201).json({
+      success: true,
+      message: "Tạo quiz thành công",
+      data: { quiz: newQuiz },
+    });
   } catch (err) {
     if (client) await client.query("ROLLBACK");
     next(err);
@@ -280,12 +275,10 @@ async function updateQuiz(req, res, next) {
         return res
           .status(404)
           .json({ success: false, message: "Quiz không tồn tại" });
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Bạn không có quyền sửa bài test này",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "Bạn không có quyền sửa bài test này",
+      });
     }
 
     await client.query("DELETE FROM questions WHERE quiz_id = $1", [quizId]);
@@ -334,12 +327,10 @@ async function deleteQuiz(req, res, next) {
         return res
           .status(404)
           .json({ success: false, message: "Quiz không tồn tại" });
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Bạn không có quyền xóa bài test này",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "Bạn không có quyền xóa bài test này",
+      });
     }
 
     res.json({ success: true, message: "Đã xóa quiz" });
